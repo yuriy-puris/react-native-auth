@@ -4,7 +4,7 @@ import { Text } from 'react-native-paper'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import * as Google from 'expo-google-app-auth'
-import { GoogleLogo } from '../assets/icons'
+import { GoogleLogo } from '../../assets/icons'
 import { theme } from '../core/theme'
 import { ANDROID_GOOGLE_CLIENT_ID, IOS_GOOGLE_CLIENT_ID } from '../core/config'
 

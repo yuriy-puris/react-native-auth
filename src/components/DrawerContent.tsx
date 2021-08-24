@@ -11,7 +11,7 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper'
-import { SettingsIcon } from '../assets/icons'
+import { SettingsIcon } from '../../assets/icons'
 
 export default function DrawerContent() {
   return (

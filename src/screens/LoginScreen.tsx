@@ -11,19 +11,35 @@ import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
 import BackButton from '../components/BackButton';
+import { loginUser } from '../api/auth-api';
+import GoogleLogin from '../components/GoogleLogin';
 
 export default function LoginScreen({ navigation }: any) {
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
-    const onLoginPressed = () => {
-        const emailError = emailValidator(email.value);
-        const passwordError = passwordValidator(password.value);
-        if (emailError || emailError) {
-            setEmail({ ...email, error: emailError });
-            setPassword({ ...password, error: passwordError });
+    const onLoginPressed = async () => {
+        const emailError = emailValidator(email.value)
+        const passwordError = passwordValidator(password.value)
+        if (emailError || passwordError) {
+          setEmail({ ...email, error: emailError })
+          setPassword({ ...password, error: passwordError })
+          return
         }
-    };
+        setLoading(true)
+        const response = await loginUser({
+          email: email.value,
+          password: password.value,
+        })
+        if (response.error) {
+          setError(response.error)
+        } else {
+            navigation.replace('HomeScreen')
+        }
+        setLoading(false)
+      }
 
     return (
         <Background>
@@ -53,6 +69,7 @@ export default function LoginScreen({ navigation }: any) {
                 Log in
             </Button>
             <Button mode="contained">Sign in</Button>
+            <GoogleLogin />
             <View style={styles.row}>
                 <Text>Already have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.replace('LoginScreen')}>
